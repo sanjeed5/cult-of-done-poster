@@ -1,7 +1,9 @@
-import React from 'react';
-import { Check, Edit3, Clock, Zap, Trash2, Target, HandMetal, Ghost } from 'lucide-react';
+import React, { useState } from 'react';
+import { Check, Edit3, Clock, Zap, Trash2, Target, HandMetal, Ghost, Sun, Moon, Printer } from 'lucide-react';
 
 const CultOfDonePoster: React.FC = () => {
+  const [isDark, setIsDark] = useState(true);
+
   const manifestoItems = [
     { text: <>There are <strong>three states of being</strong>. Not knowing, action and completion.</>, icon: <Zap className="w-4 h-4" /> },
     { text: <>Accept that <strong>everything is a draft</strong>. It helps to get it done.</>, icon: <Edit3 className="w-4 h-4" /> },
@@ -18,50 +20,77 @@ const CultOfDonePoster: React.FC = () => {
     { text: <><strong>Done is the engine of more</strong>.</>, icon: <Zap className="w-4 h-4" /> }
   ];
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
-    <div className="bg-[#1c1c1c] text-gray-300 p-8 min-h-screen font-mono">
-      <h1 className="text-3xl font-normal mb-12 text-center text-gray-100">
+    <div className={`${isDark ? 'bg-[#1c1c1c] text-gray-300' : 'bg-gray-50 text-gray-700'} p-8 min-h-screen font-mono transition-colors duration-300`}>
+      <div className="fixed top-6 right-6 flex items-center gap-4">
+        <button 
+          onClick={handlePrint}
+          className={`p-2 rounded-md ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-200'} transition-colors duration-200 flex items-center gap-2`}
+        >
+          <Printer className="w-4 h-4" />
+          <span className="text-xs">Print it</span>
+        </button>
+        <button 
+          onClick={() => setIsDark(!isDark)} 
+          className={`p-2 rounded-md ${isDark ? 'hover:bg-gray-800' : 'hover:bg-gray-200'} transition-colors duration-200`}
+        >
+          {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </button>
+      </div>
+      
+      <h1 className={`text-3xl font-normal mb-12 text-center ${isDark ? 'text-gray-100' : 'text-gray-900'}`}>
         The Cult of Done Manifesto
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
         {manifestoItems.map((item, index) => (
           <div 
             key={index} 
-            className="border border-gray-800 p-4 relative bg-[#232323] hover:bg-[#282828] transition-colors duration-200"
+            className={`border ${isDark ? 'border-gray-800 bg-[#232323] hover:bg-[#282828]' : 'border-gray-200 bg-white hover:bg-gray-50'} p-4 relative transition-colors duration-200`}
           >
             <div className="flex items-start gap-3">
-              <span className="text-gray-500 font-mono text-sm select-none">{(index + 1).toString().padStart(2, '0')}</span>
+              <span className={`font-mono text-sm select-none ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                {(index + 1).toString().padStart(2, '0')}
+              </span>
               <div className="flex-1">
-                <div className="text-gray-400 mb-2">
+                <div className={`mb-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                   {item.icon}
                 </div>
-                <p className="text-sm leading-relaxed text-gray-200">{item.text}</p>
+                <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-200' : 'text-gray-600'}`}>
+                  {item.text}
+                </p>
               </div>
             </div>
           </div>
         ))}
       </div>
-      <div className="text-center mt-8 space-y-2 text-sm text-gray-500">
-        <div>
+      <div className={`text-center mt-8 space-y-2 text-sm ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+        <div className="print-hide">
           <a 
             href="https://sanjeed.in" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="hover:text-gray-300 transition-colors inline-flex items-center gap-1.5"
+            className={`inline-flex items-center gap-1.5 ${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'} transition-colors`}
           >
-            Made with ❤️ by <span className="border-b border-gray-700 hover:border-gray-500">Sanjeed</span>
+            Made with ❤️ by <span className={`border-b ${isDark ? 'border-gray-700 hover:border-gray-500' : 'border-gray-300 hover:border-gray-400'}`}>Sanjeed</span>
           </a>
         </div>
-        <div>
+        <div className="print-hide">
           <a 
             href="https://medium.com/@bre/the-cult-of-done-manifesto-724ca1c2ff13" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="hover:text-gray-300 transition-colors"
+            className={`${isDark ? 'hover:text-gray-300' : 'hover:text-gray-600'} transition-colors`}
           >
             Original Manifesto
           </a>
         </div>
+      </div>
+      <div className="hidden print:block print-footer">
+        done.sanjeed.in
       </div>
     </div>
   );
