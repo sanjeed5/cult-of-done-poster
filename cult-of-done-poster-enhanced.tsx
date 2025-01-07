@@ -40,14 +40,24 @@ const CultOfDonePoster: React.FC = () => {
             </div>
           ))}
         </div>
-        <a 
-          href="https://medium.com/@bre/the-cult-of-done-manifesto-724ca1c2ff13" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="block text-center mt-8 text-xs text-gray-500 hover:text-gray-400 transition-colors"
-        >
-          Source
-        </a>
+        <div className="flex flex-col items-center mt-8 space-y-2">
+          <a 
+            href="https://sanjeed.in" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-xs text-gray-500 hover:text-gray-400 transition-colors"
+          >
+            Made with ❤️ by <span className="underline">Sanjeed</span>
+          </a>
+          <a 
+            href="https://medium.com/@bre/the-cult-of-done-manifesto-724ca1c2ff13" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-xs text-gray-500 hover:text-gray-400 transition-colors"
+          >
+            Inspiration
+          </a>
+        </div>
       </div>
     </div>
   );
